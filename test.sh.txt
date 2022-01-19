@@ -1,0 +1,53 @@
+#!/bin/bash
+
+# extracting information from a date yyyy-mm-dd
+
+x="2020-01-02"
+year=${x:0:4}
+month=${x:5:2} # substring operation ${var:start:length}, start counts from zero.
+day=${x:8:2}
+
+echo $year, $month, $day
+
+# iterating through dates
+
+a="2020"  # the year
+b="03"    # the start month
+c="05"    # the ending month
+
+# assume every day range is 01 to 15 and 16 to 31
+
+startDay="01"
+endDay="15";
+
+while [ $b -le $c ]; do
+
+	# 
+	# do some work with startDay and endDay
+	# 
+
+	theNewStartDate=$a-$b-$startDay
+	theNewEndDate=$a-$b-$endDay
+	echo $startDay, $endDay, $b, $c, $theNewStartDate, $theNewEndDate  # === for testing
+
+	# 
+	# now get the next day rage
+	#
+
+	if [ $startDay -eq "01" ]; then
+		startDay="16"
+		endDay="31"
+	elif [ $startDay -eq "16" ]; then
+		startDay="01"
+		endDay="15"
+
+		b=$(expr $b + 1)
+
+		if [ ${#b} -lt 2 ]; then
+			b=0$b # prepend the zero to $b
+		fi
+	fi
+
+done
+
+exit 0
